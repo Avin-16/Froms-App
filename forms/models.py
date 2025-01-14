@@ -37,3 +37,17 @@ class Form(BaseModel):
     bg_color = models.CharField(default="7FC6A4", max_length=7)
 
 
+class ResponseAnswer(BaseModel):
+    id = models.UUIDField(
+        default=uuid.uuid4, primary_key=True, editable=False, unique=True
+    ) 
+    answer = models.CharField(max_length =200)
+    answer_to = models.ForeignKey(Question, on_delete=models.CASCADE, related_name = 'asnswers_to')
+class Response(BaseModel):
+    id = models.UUIDField(
+        default=uuid.uuid4, primary_key=True, editable=False, unique=True
+    )
+    form = models.ForeignKey(Form,on_delete=models.CASCADE, related_name = 'forms')
+    respond_email = models.ForeignKey(Question, on_delete=models.CASCADE, related_name = 'forms_email')
+    responder_mail = models.ManyToManyField(ResponseAnswer)
+
